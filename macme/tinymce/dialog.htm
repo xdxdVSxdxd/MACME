@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#macme_dlg.title}</title>
+	<script type="text/javascript" src="../../../../wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="md5.js"></script>	
+	<script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" >jQuery.noConflict();</script>
+    <script type="text/javascript" src="../fileuploader.js"></script>
+	<link href="../fileuploader.css" rel="stylesheet" type="text/css">
+    
+    <script type="text/javascript">
+	
+		jQuery(document).ready(function(){
+   			//createVideoUploader();
+ 		});
+		
+		
+		
+    
+    </script>
+    
+</head>
+<body>
+
+<!--form onsubmit="MacmeDialog.insert();return false;" action="#"-->
+	<p>What do you want to insert?</p>
+	<p>
+		<select id="macmetype" name="macmetype" class="select" onChange="MacmeDialog.getTypeValue();">
+			<option value="-1">Select</option>			
+			<option value="-1">--------------------------------------------------</option>
+			<option value="0">Link</option>
+			<option value="1">video</option>
+            <option value="1bis">video embed</option>
+			<option value="2">sound</option>
+			<option value="3">3d Object</option>
+			<option value="4">Google search visualization</option>
+			<option value="5">Flickr search visualization</option>
+			<option value="6">Geo coordinates</option>
+			<option value="7">Geo address</option>
+		</select> 
+	</p>
+	
+    <input type="hidden" name="macme-upload-asset-url" id="macme-upload-asset-url" />
+    
+    <div id="linkinputs">
+    	<p>Title: <input name="macme-link-title" id="macme-link-title" /></p>
+        <p>Description: <input name="macme-link-description" id="macme-link-description" /></p>
+    	<p>Link: <input name="macme-link-url" id="macme-link-url" /></p>
+    </div>
+	
+    
+    <div id="videoinputs">
+    	<p>Title: <input name="macme-video-title" id="macme-video-title" /></p>
+        <p>Description: <input name="macme-video-description" id="macme-video-description" /></p>
+    	<p>
+        	<div id="videoupload">		
+				<noscript>			
+					<p>Please enable JavaScript to use file uploader.</p>
+					<!-- or put a simple form for upload here -->
+				</noscript>         
+			</div>
+            <script>        
+        		function createVideoUploader(){            
+            		var uploader = new qq.FileUploader({
+                		element: document.getElementById('videoupload'),
+                		action: 'upload.php',
+						allowedExtensions: ['ogv','mov','mp4'],
+                		debug: true,
+						onSubmit: function(id, fileName){ 
+							//alert(fileName + "-_--" + id); 
+						},
+						onComplete: function(id, fileName, responseJSON){
+							if(responseJSON.success && responseJSON.success==true){
+								//alert(responseJSON.destpath);
+								jQuery("input#macme-upload-asset-url").val(responseJSON.destpath);
+							} else if(responseJSON.error){
+								alert(responseJSON.error);
+							} else {
+								alert("an error prevented the file from being uploaded, please contact webmaster.");
+							}
+							
+						}
+            		});           
+        		}
+				
+
+    		</script>    
+        </p>
+    </div>
+    
+    
+    <div id="videoembedinputs">
+    	<p>Title: <input name="macme-videoembed-title" id="macme-videoembed-title" /></p>
+        <p>Description: <input name="macme-videoembed-description" id="macme-videoembed-description" /></p>
+    	<p>Embed code: <input name="macme-videoembed-embed" id="macme-videoembed-embed" /></p>
+    </div>
+	
+    
+    <div id="soundinputs">
+    	<p>Title: <input name="macme-sound-title" id="macme-sound-title" /></p>
+        <p>Description: <input name="macme-sound-description" id="macme-sound-description" /></p>
+    	<p>
+        	<div id="soundupload">		
+				<noscript>			
+					<p>Please enable JavaScript to use file uploader.</p>
+					<!-- or put a simple form for upload here -->
+				</noscript>         
+			</div>
+            <script>        
+        		function createSoundUploader(){            
+            		var uploader = new qq.FileUploader({
+                		element: document.getElementById('soundupload'),
+                		action: 'upload.php',
+						allowedExtensions: ['mp3','wav','ogg'],
+                		debug: true,
+						onSubmit: function(id, fileName){ 
+							//alert(fileName + "-_--" + id); 
+						},
+						onComplete: function(id, fileName, responseJSON){
+							if(responseJSON.success && responseJSON.success==true){
+								//alert(responseJSON.destpath);
+								jQuery("input#macme-upload-asset-url").val(responseJSON.destpath);
+							} else if(responseJSON.error){
+								alert(responseJSON.error);
+							} else {
+								alert("an error prevented the file from being uploaded, please contact webmaster.");
+							}
+							
+						}
+            		});           
+        		}
+				
+
+    		</script>
+        
+        </p>
+    </div>
+    
+    
+    <div id="3Dinputs">
+    	<p>Title: <input name="macme-3D-title" id="macme-3D-title" /></p>
+        <p>Description: <input name="macme-3D-description" id="macme-3D-description" /></p>
+    	<p>
+        
+        	<div id="3Dupload">		
+				<noscript>			
+					<p>Please enable JavaScript to use file uploader.</p>
+					<!-- or put a simple form for upload here -->
+				</noscript>         
+			</div>
+            <script>        
+        		function create3DUploader(){            
+            		var uploader = new qq.FileUploader({
+                		element: document.getElementById('3Dupload'),
+                		action: 'upload.php',
+						allowedExtensions: ['dae'],
+                		debug: true,
+						onSubmit: function(id, fileName){ 
+							//alert(fileName + "-_--" + id); 
+						},
+						onComplete: function(id, fileName, responseJSON){
+							if(responseJSON.success && responseJSON.success==true){
+								//alert(responseJSON.destpath);
+								jQuery("input#macme-upload-asset-url").val(responseJSON.destpath);
+							} else if(responseJSON.error){
+								alert(responseJSON.error);
+							} else {
+								alert("an error prevented the file from being uploaded, please contact webmaster.");
+							}
+							
+						}
+            		});           
+        		}
+				
+
+    		</script>
+        
+        </p>
+    </div>
+    
+    
+    <div id="googleinputs">
+    	<p>Title: <input name="macme-google-title" id="macme-google-title" /></p>
+        <p>Description: <input name="macme-google-description" id="macme-google-description" /></p>
+    	<p>Search String: <input name="macme-google-terms" id="macme-google-terms" /></p>
+    </div>
+	
+    
+    <div id="flickrinputs">
+    	<p>Title: <input name="macme-flickr-title" id="macme-flickr-title" /></p>
+        <p>Description: <input name="macme-flickr-description" id="macme-flickr-description" /></p>
+    	<p>Search String: <input name="macme-flickr-terms" id="macme-flickr-terms" /></p>
+    </div>
+	
+    
+    <div id="latlonginputs">
+    	<p>Title: <input name="macme-latlng-title" id="macme-latlng-title" /></p>
+        <p>Description: <input name="macme-latlng-description" id="macme-latlng-description" /></p>
+    	<p>Latitude: <input name="macme-latlng-lat" id="macme-latlng-lat" /></p>
+        <p>Longitude: <input name="macme-latlng-lng" id="macme-latlng-lng" /></p>
+    </div>
+	
+    
+    <div id="addressinputs">
+    	<p>Title: <input name="macme-address-title" id="macme-address-title" /></p>
+        <p>Description: <input name="macme-address-description" id="macme-address-description" /></p>
+    	<p>Address: <input name="macme-address-string" id="macme-address-string" /></p>
+    </div>
+	
+
+	<div class="mceActionPanel">
+		<input type="button" id="insert" name="insert" value="{#insert}" onclick="MacmeDialog.insert();" />
+		<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+	</div>
+<!--/form-->
+
+
+<div id="loaddestination" style="display:none"></div>
+
+<script type="text/javascript">
+
+
+function createAllUploaders(){
+
+	createVideoUploader();
+	createSoundUploader();
+	
+}
+
+window.onload = createAllUploaders;
+</script>
+</body>
+</html>

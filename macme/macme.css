@@ -1,0 +1,230 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+div.macmecontent{
+float: left;
+padding: 0px;
+width: 80%;
+margin: auto;
+margin-top: 6px;
+margin-bottom: 6px;
+}
+
+div.macmeassettitle{
+float: left;
+padding: 0px;
+width: 100%;
+margin: 0px;
+margin-bottom: 6px;
+font: bold 14px Arial, Helvetica, sans-serif;
+line-height: 18px;
+}
+
+div.macmeassetcontent{
+float: left;
+padding: 0px;
+width: 100%;
+margin: 0px;
+margin-bottom: 6px;
+font: 10px Arial, Helvetica, sans-serif;
+line-height: 12px;
+}
+
+div.macmeassetdescription{
+float: left;
+padding: 0px;
+width: 100%;
+margin: 0px;
+margin-bottom: 6px;
+font: 10px Arial, Helvetica, sans-serif;
+line-height: 12px;
+}
+
+
+div.macmeassetcontent a, div.macmeassetcontent a:visited{
+display: block;
+float:left;
+padding: 0px;
+margin: 0px;
+width: 100%;
+text-decoration: none;
+color: inherit;
+background: inherit;
+}
+
+div.macmeassetcontent a:hover{
+display: block;
+float:left;
+padding: 0px;
+margin: 0px;
+width: 100%;
+text-decoration: underline;
+color: inherit;
+background: inherit;
+}
+
+
+div.macmemap{
+display: block;
+float:left;
+padding: 0px;
+margin: 0px;
+width: 100%;
+height: 100%;
+min-height: 250px;
+}
+
+div.macme-qrcode-box{
+display: block;
+float:left;
+padding: 12px;
+margin: 12px;
+width: 150px;
+}
+
+div.macme-qrcode-box img{
+display: block;
+float:left;
+padding: 0px;
+margin: 0px;
+width: 150px;
+height: 150px;
+}
+
+div.macme-qrcode-title{
+display: block;
+float:left;
+padding: 0px;
+margin: 0px;
+width: 150px;
+font: bold 12px Arial, Helvetica, sans-serif;
+}
+
+
+div.macme-qrcode-link{
+display: block;
+float:left;
+padding: 0px;
+margin: 0px;
+width: 150px;
+font: 10px Arial, Helvetica, sans-serif;
+}
+
+
+div.macme-qrcode-link a, div.macme-qrcode-link a:visited{
+text-decoration: none;
+color: inherit;
+background: inherit;
+}
+
+div.macme-qrcode-link a:hover{
+text-decoration: underline;
+}
+
+div#macme-general-map{
+display: block;
+float:left;
+padding: 0px;
+margin: 0px;
+margin-top: 12px;
+margin-bottom: 12px;
+width: 100%;
+height: 100%;
+min-height: 350px;
+}
+
+div.macme-admin-panel{
+float: left;
+margin: 0px;
+padding: 0px;
+width: 50%;
+}
+
+div.macme-admin-panel-header{
+float: left;
+margin: 0px;
+margin-top: 10px;
+margin-bottom: 10px;
+padding: 0px;
+width: 100%;
+font: bold 18px Arial, Helvetica, sans-serif;
+color: #000000;
+}
+
+div.macme-post-from{
+float: left;
+margin: auto;
+padding: 0px;
+width: 80%;
+margin-bottom: 4px;
+background: #336699;
+color:#FFFFFF;
+}
+
+div.macme-chapter{
+float: left;
+margin: auto;
+padding: 0px;
+width: 80%;
+margin-bottom: 4px;
+background: #333333;
+color:#FFFFFF;
+}
+
+div.macme-chapter-name{
+float: left;
+margin: 0px;
+padding: 0px;
+width: 100%;
+margin-bottom: 4px;
+font:12px Arial, Helvetica, sans-serif;
+}
+
+div.macme-chapter-body{
+float: left;
+margin: 0px;
+padding: 0px;
+width: 100%;
+margin-bottom: 4px;
+font:12px Arial, Helvetica, sans-serif;
+}
+
+
+div.macme-post-from-title{
+float: left;
+margin: 0px;
+padding: 0px;
+height: 30px;
+width: 70%;
+font: 12px Arial, Helvetica, sans-serif;
+line-height: 30px;
+}
+
+div.macme-post-from-tools{
+float: left;
+margin: 0px;
+padding: 0px;
+width: 30%;
+min-height: 30px;
+font: 12px Arial, Helvetica, sans-serif;
+text-align: right;
+}
+
+div.macme-admin-panel-toolbar{
+float: left;
+margin: 0px;
+margin-bottom: 6px;
+padding: 0px;
+width: 100%;
+height: 30px;
+font: 12px Arial, Helvetica, sans-serif;
+}
+
+div.macme-admin-panel-body{
+float: left;
+margin: 0px;
+padding: 0px;
+width: 100%;
+font: 12px Arial, Helvetica, sans-serif;
+}

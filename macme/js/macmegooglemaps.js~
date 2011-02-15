@@ -1,0 +1,73 @@
+var geocoders = new Array();
+var mapgeocoders = new Array();
+
+
+function initlatlong(lat,lon,id) {
+    var latlng = new google.maps.LatLng(lat, lon);
+    var myOptions = {
+      zoom: 8,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById(id),  myOptions);
+    image = "wp-content/plugins/macme/geomarker.png";
+	var macmemarker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      icon: image
+  });
+
+  }
+
+
+function initaddress(address,id){
+	
+	var gc = new GeoLocate();
+	gc.init(address,id);
+
+}
+
+
+
+function GeoLocate(){
+
+var mapi; 
+var geocoderi;
+
+this.process = function(results,status){
+    	if (status == google.maps.GeocoderStatus.OK) {
+    		alert(results[0].geometry.location);
+        	this.mapi.setCenter(results[0].geometry.location);
+        	image = "wp-content/plugins/macme/geomarker.png";
+        	var marker = new google.maps.Marker({
+            	map: this.mapi, 
+            	position: results[0].geometry.location,
+            	icon: image
+        	});
+      	} else {
+        	alert("Geocode was not successful for the following reason: " + status);
+      	}
+}//process
+
+
+this.init = function (address,id){
+
+	this.geocoderi = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(0, 0);
+    var myOptions = {
+      zoom: 8,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    this.mapi = new google.maps.Map(document.getElementById(id), myOptions);
+    
+    var c;
+    with( {p : this} ){
+    	c = function(results,status){ p.process(results,status); };
+    }
+    
+    this.geocoderi.geocode( { 'address': address}, c );
+}//init
+
+
+}//GeoLocate

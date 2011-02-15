@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#macme_dlg.title}</title>
+	<script type="text/javascript" src="../../../../wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="md5.js"></script>	
+	<script type="text/javascript" src="js/dialog.js"></script>
+</head>
+<body>
+
+<form onsubmit="MacmeDialog.insert();return false;" action="#">
+	<p>What do you want to insert?</p>
+	<p>
+		<select id="macmetype" name="macmetype" class="select" onChange="MacmeDialog.getTypeValue();">
+			<option value="-1">Select</option>			
+			<option value="-1">--------------------------------------------------</option>
+			<option value="0">QRCode - Link</option>
+			<option value="1">QRCode - video</option>
+			<option value="2">QRCode - sound</option>
+			<option value="3">Fiducial - 3d Object</option>
+			<option value="4">Fiducial - Google search visualization</option>
+			<option value="5">Fiducial - Flickr search visualization</option>
+			<option value="6">QRCode - coordinates</option>
+			<option value="7">QRCode - address</option>
+		</select> 
+	</p>
+	
+	<div id="dtitle">
+		<p>Title: <input id="macmetitle" name="macmetitle" type="text" class="text" /></p>
+	</div>
+	<div id="d0">
+		<p>Link: <input id="macmelink" name="macmelink" type="text" class="text" /></p>
+	</div>
+	<div id="d1">
+		<p>Video embed: <textarea id="macmevideourl" name="macmevideourl" class="text" cols="40" rows="5" > </textarea></p>
+	</div>
+	<div id="d2">
+		<p>Sound URL: <input id="macmesoundurl" name="macmesoundurl" type="text" class="text" /></p>
+	</div>
+	<div id="d3">
+		<p>3D object URL: <input id="macme3durl" name="macme3durl" type="text" class="text" /></p>
+	</div>
+	<div id="d4">
+		<p>Google Search String: <input id="macmegooglesearch" name="macmegooglesearch" type="text" class="text" /></p>
+	</div>
+	<div id="d5">
+		<p>Flickr Search String: <input id="macmeflickrsearch" name="macmeflickrsearch" type="text" class="text" /></p>
+	</div>
+	<div id="d6">
+		<p>Latitude: <input id="macmelat" name="macmelat" type="text" class="text" /></p>
+		<p>Longitude: <input id="macmelong" name="macmelong" type="text" class="text" /></p>
+		<p>Zoom Level: <select id="macmezoom1" name="macmezoom1" class="text" >
+					<option value="0">0</option>			
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+			</select>
+		</p>
+	</div>
+	<div id="d7">
+		<p>Address: <input id="macmeaddress" name="macmeaddress" type="text" class="text" /></p>
+	</div>
+
+	<div class="mceActionPanel">
+		<input type="button" id="insert" name="insert" value="{#insert}" onclick="MacmeDialog.insert();" />
+		<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+	</div>
+</form>
+
+</body>
+</html>

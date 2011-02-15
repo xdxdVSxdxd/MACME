@@ -1,0 +1,146 @@
+html,body{
+margin: 0px;
+padding: 0px;
+border: 0px;
+background: #000000;
+color: #FFFFFF;
+font: 10px sans-serif;
+width: 100%;
+height: 100%;
+}
+
+div#resultsdiv{
+float: left;
+margin: 0px;
+padding: 0px; 
+border: 0px;
+font: 10px sans-serif;
+width: 100%;
+height: 100%;
+position: absolute;
+top: 0px; 
+left: 0px;
+z-index: 1000;
+background: transparent;
+}
+
+div.result{
+position: absolute;
+background: transparent;
+color: #FFFFFF;
+font: 10px sans-serif;
+margin: 0px;
+padding: 0px;
+border: 0px;
+width: 164px;
+}
+
+div.crosshair{
+position: relative;
+float:left;
+width:20px;
+height:20px;
+min-width:15px;
+min-height:10px;
+background: transparent url("cross2.png");
+color: #FFFFFF;
+font: 10px sans-serif;
+margin: 0px;
+padding: 0px;
+border: 0px;
+}
+
+a,a:visited{
+color: inherit;
+background: inherit;
+text-decoration: none;
+font: bold;
+}
+
+a:hover{
+text-decoration: underline;
+}
+
+div.result-title{
+font: bold 12px sans-serif;
+width: 150px;
+margin: 2px;
+margin-top: 18px;
+padding: 5px;
+border: 0px;
+float: left; 
+display: none;
+background: #E1001A;
+color: #FFFFFF;
+}
+
+div.result-content{
+font: 10px sans-serif;
+width: 150px;
+margin: 2px;
+padding: 5px;
+border: 0px;
+float: left;
+display: none;
+background: #DDDDDD;
+color: #000000;
+}
+
+div.result-link{
+font: 10px sans-serif;
+width: 150px;
+margin: 2px;
+padding: 5px;
+border: 0px;
+float: left;
+display: none;
+background: #AAAAAA;
+color: #000000;
+}
+
+
+
+div#drawing{
+position: absolute;
+width: 100%;
+height: 100%;
+margin: 0px;
+padding: 0px;
+top: 0px;
+left: 0px;
+z-index: 500;
+background: #000000;
+color: #DDDDDD;
+}
+
+div#number-results{
+width: 100%;
+height: 100%;
+font: bold 200px sans-serif;
+text-align: center;
+margin: 0px;
+position: absolute;
+z-index: 10;
+background: transparent;
+color: #333333;
+}
+
+div#title-results{
+font: 40px sans-serif;
+margin: 10px;
+position: absolute;
+z-index: 11;
+background: transparent;
+color: #999999;
+}
+
+div.macmemap{
+float: left;
+width: 500px;
+height: 300px;
+min-width: 500px;
+min-height: 300px;
+padding: 0px;
+margin: 4px;
+border: 0px;
+}

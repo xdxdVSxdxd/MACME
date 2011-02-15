@@ -1,0 +1,182 @@
+tinyMCEPopup.requireLangPack();
+
+var MacmeDialog = {
+	init : function() {
+		var f = document.forms[0];
+
+		// Get the selected contents as text and place it in the input
+		// f.someval.value = tinyMCEPopup.editor.selection.getContent({format : 'text'});
+		// f.somearg.value = tinyMCEPopup.getWindowArg('some_custom_arg');
+
+		document.getElementById("d0").style.visibility = 'hidden';
+		document.getElementById("d1").style.visibility = 'hidden';
+		document.getElementById("d2").style.visibility = 'hidden';
+		document.getElementById("d3").style.visibility = 'hidden';
+		document.getElementById("d4").style.visibility = 'hidden';
+		document.getElementById("d5").style.visibility = 'hidden';
+		document.getElementById("d6").style.visibility = 'hidden';
+		document.getElementById("d7").style.visibility = 'hidden';
+		document.getElementById("dtitle").style.visibility = 'hidden';
+		
+		document.getElementById("d0").style.display = "none";
+		document.getElementById("d1").style.display = "none";
+		document.getElementById("d2").style.display = "none";
+		document.getElementById("d3").style.display = "none";
+		document.getElementById("d4").style.display = "none";
+		document.getElementById("d5").style.display = "none";
+		document.getElementById("d6").style.display = "none";
+		document.getElementById("d7").style.display = "none";
+		document.getElementById("dtitle").style.display = "none";	
+		
+	},
+	
+	getTypeValue: function(){
+	
+		var quale = document.forms[0].macmetype.options[  document.forms[0].macmetype.selectedIndex ].value;
+		
+		
+		document.getElementById("d0").style.visibility = 'hidden';
+		document.getElementById("d1").style.visibility = 'hidden';
+		document.getElementById("d2").style.visibility = 'hidden';
+		document.getElementById("d3").style.visibility = 'hidden';
+		document.getElementById("d4").style.visibility = 'hidden';
+		document.getElementById("d5").style.visibility = 'hidden';
+		document.getElementById("d6").style.visibility = 'hidden';
+		document.getElementById("d7").style.visibility = 'hidden';
+		document.getElementById("dtitle").style.visibility = 'hidden';
+		
+		document.getElementById("d0").style.display = "none";
+		document.getElementById("d1").style.display = "none";
+		document.getElementById("d2").style.display = "none";
+		document.getElementById("d3").style.display = "none";
+		document.getElementById("d4").style.display = "none";
+		document.getElementById("d5").style.display = "none";
+		document.getElementById("d6").style.display = "none";
+		document.getElementById("d7").style.display = "none";
+		document.getElementById("dtitle").style.display = "none";
+		
+		if(quale!=-1){
+			document.getElementById("dtitle").style.visibility = 'visible';
+			document.getElementById("dtitle").style.display = "block";
+			document.getElementById("dtitle").value = '';
+			document.getElementById("d" + quale).style.visibility = 'visible';
+			document.getElementById("d" + quale).style.display = "block";
+		}
+	}, 
+	
+	insert : function() {
+		// Insert the contents from the input into the document
+		// tinyMCEPopup.editor.execCommand('mceInsertContent', false, document.forms[0].someval.value);
+
+		var quale = document.forms[0].macmetype.options[  document.forms[0].macmetype.selectedIndex ].value;
+		var shortcode = "";
+		var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+		var title = "";
+		title = document.forms[0].macmetitle.value;
+		
+		if( quale==0){
+			var link = document.forms[0].macmelink.value;
+			
+			if ( regexp.test( link ) ) {
+				shortcode = "[macme type='link' url='" + link + "' title='" + escape(title) + "']";
+			} else {
+				alert( "This is not a valid URL" );
+			}
+		}	else if( quale==1){
+			var macmevideourl = document.forms[0].macmevideourl.value;
+			if ( macmevideourl!="" ) {
+				shortcode = "[macme type='video' embed='" +  escape(macmevideourl)  + "'  title='" + escape(title) + "']";
+			} else {
+				alert( "This is not a valid EMBED" );
+			}
+		} 	else if( quale==2){
+			var macmesoundurl = document.forms[0].macmesoundurl.value;
+			if ( regexp.test( macmesoundurl ) ) {
+				shortcode = "[macme type='sound' url='" + macmesoundurl + "' title='" + escape(title) + "']";
+			} else {
+				alert( "This is not a valid URL" );
+			}
+		} 	else if( quale==3){
+			var macme3durl = document.forms[0].macme3durl.value;
+			if ( regexp.test( macme3durl ) ) {
+				shortcode = "[macme type='3D' url='" + macme3durl + "'  title='" + escape(title) + "']";
+			} else {
+				alert( "This is not a valid URL" );
+			}
+		}  else if( quale==4){
+			var macmegooglesearch = document.forms[0].macmegooglesearch.value;
+			if ( macmegooglesearch.trim()!="" ) {
+				shortcode = "[macme type='google' searchstring='" + escape( macmegooglesearch.trim() ) + "'  title='" + escape(title) + "']";
+			} else {
+				alert( "String is empty" );
+			}
+		}  else if( quale==5){
+			var macmeflickrsearch = document.forms[0].macmeflickrsearch.value;
+			if ( macmeflickrsearch.trim()!="" ) {
+				shortcode = "[macme type='flickr' searchstring='" + escape( macmeflickrsearch.trim() ) + "'  title='" + escape(title) + "']";
+			} else {
+				alert( "String is empty" );
+			}
+		}  else if( quale==6){
+			var macmelat = document.forms[0].macmelat.value;
+			var macmelong = document.forms[0].macmelong.value;
+			var macmezoom = document.forms[0].macmezoom1.value;
+			
+			var isf = true;
+			
+    		if(!macmelat  || (typeof macmelat != "string" || macmelat.constructor != String)) {
+      			isf = false;
+    		}
+    		var isNumber1 = !isNaN(new Number(macmelat));
+    		if(isNumber1) {
+      			if(macmelat.indexOf('.') != -1) {
+        			isf = true;
+      			} else {
+        			isf = false;
+      			}
+			} else {
+				isf = false;
+			}
+			
+			if(isf){
+				if(!macmelong  || (typeof macmelong != "string" || macmelong.constructor != String)) {
+      				isf = false; title='" + escape(title) + "'
+    			}
+    			var isNumber2 = !isNaN(new Number(macmelong));
+    			if(isNumber2) {
+      				if(macmelong.indexOf('.') != -1) {
+        				isf = true;
+	      			} else {
+    	    			isf = false;
+      				}
+				}  else {
+					isf = false;
+				}
+			}
+			
+			if ( isf ) {
+				shortcode = "[macme type='latlong' lat='" + macmelat.trim() + "' long='" + macmelat.trim() + "'  title='" + escape(title) + "' zoom='" + macmezoom + "']";
+			} else {
+				alert( "unacceptable values for (lat,long)" );
+			}
+		}   else if( quale==7){
+			var macmeaddress = document.forms[0].macmeaddress.value;
+			var macmezoom = document.forms[0].macmezoom2.value;
+			
+			if ( macmeaddress.trim()!="" ) {
+				shortcode = "[macme type='address' address='" + macmeaddress.trim() + "'  title='" + escape(title) + "']";
+			} else {
+				alert( "String is empty" );
+			}
+		}
+		
+		if( shortcode.trim()!="" && title.trim()!="" ){
+			tinyMCEPopup.editor.execCommand('mceInsertContent', false, shortcode);
+			tinyMCEPopup.close();
+ 		}		
+		
+	}
+};
+
+tinyMCEPopup.onInit.add(MacmeDialog.init, MacmeDialog);
