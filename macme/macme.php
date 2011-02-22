@@ -485,6 +485,8 @@ function macme_shortcode_handler($atts) {
 	), $atts));
 	
 	
+	//echo($macme_table_content_assets);
+	
 	$assets = $wpdb->get_results("SELECT * FROM $macme_table_content_assets WHERE id=" . $id );
 
 

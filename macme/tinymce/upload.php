@@ -1,12 +1,12 @@
 <?php
 
 require_once"../../../../wp-config.php";
+global $wpdb;
 
 
-
-$macme_table_statistics_data = "macme_stat_data";
-$macme_table_statistics_location = "macme_stat_location";
-$macme_table_content_assets = "macme_content_assets";
+$macme_table_statistics_data = $wpdb->prefix . "macme_stat_data";
+$macme_table_statistics_location = $wpdb->prefix . "macme_stat_location";
+$macme_table_content_assets = $wpdb->prefix . "macme_content_assets";
 
 
 /**
