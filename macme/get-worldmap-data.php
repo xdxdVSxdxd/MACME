@@ -4,7 +4,7 @@
 
 	global $wpdb;
 	
-	$results = $wpdb->get_results( "SELECT count(l.id) as c, c.name as country, c.code as code FROM macme_stat_location l, countrylist c WHERE UPPER(l.country)=UPPER(c.name) GROUP BY c.name" );
+	$results = $wpdb->get_results( "SELECT count(l.id) as c, c.name as country, c.code as code FROM " . $wpdb->prefix . "macme_stat_location l, countrylist c WHERE UPPER(l.country)=UPPER(c.name) GROUP BY c.name" );
 	//print_r($results);
 
 	if(isset($results) && is_array($results) ){
@@ -19,7 +19,7 @@
 					}//foreach($results as $r){
 				}//if( count($results)>0 ){
 				
-				$results2 = $wpdb->get_results("SELECT count(l.id) as c, l.city as city , l.country as country FROM macme_stat_location l GROUP BY l.city");
+				$results2 = $wpdb->get_results("SELECT count(l.id) as c, l.city as city , l.country as country FROM " . $wpdb->prefix . "macme_stat_location l GROUP BY l.city");
 				if(isset($results2) && is_array($results2) && count($results2)>0 ){
 					foreach($results2 as $r2){
 						$city = $r2->city;

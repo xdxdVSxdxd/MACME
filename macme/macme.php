@@ -57,9 +57,11 @@ global $macme_is_ipad;
 global $macme_is_android;
 global $macme_is_mobile;
 
-$macme_table_statistics_data = "macme_stat_data";
-$macme_table_statistics_location = "macme_stat_location";
-$macme_table_content_assets = "macme_content_assets";
+global $wpdb;
+
+$macme_table_statistics_data = $wpdb->prefix . "macme_stat_data";
+$macme_table_statistics_location = $wpdb->prefix . "macme_stat_location";
+$macme_table_content_assets = $wpdb->prefix . "macme_content_assets";
 
 $macme_is_iphone = false;
 $macme_is_ipad = false;

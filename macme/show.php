@@ -3,9 +3,9 @@ require_once"../../../wp-config.php";
 global $wpdb;
 
 
-$macme_table_statistics_data = "macme_stat_data";
-$macme_table_statistics_location = "macme_stat_location";
-$macme_table_content_assets = "macme_content_assets";
+$macme_table_statistics_data = $wpdb->prefix . "macme_stat_data";
+$macme_table_statistics_location = $wpdb->prefix . "macme_stat_location";
+$macme_table_content_assets = $wpdb->prefix . "macme_content_assets";
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
