@@ -1,0 +1,21 @@
+MACME
+Multi Author Cross Media Ecosystem
+
+is a Wordpress plugin that turns any wordpress blog into a cross-medial publishing system. It is a project by FakePress and Art is Open Source
+
+http://www.fakepress.it
+http://www.artisopensource.net
+
+MACME is released under a GPL3 ( http://www.gnu.org/licenses/gpl-3.0.html ) license.
+
+Major features of MACME are:
+
+ * ability to add links, images, videos, video embeds, sounds, 3dobjects, google searches, flickr searches and geographical coordinates to any wordpress blog
+
+ * ability to automatically render the contents of the blog into other forms, such as publishable PDFs, XHTMLs that can be easily imported into publishing platforms such as XPRESS and InDesign, and ePub publications that are easily publishable on most e-book readers
+
+ * ability to automatically transform your contents into QRCodes and AR Fiducial markers, so that they can be usable through smartphones or directly to the objects, places and bodies onto which you place the generated QRCodes
+
+ * ability to generate maps and other representations
+
+ * open API to access MACME functionalities and to build new ones (not yet completed, but we're getting there :) )
