@@ -363,6 +363,14 @@ $imk = 0;
 
 global $wpdb;
 
+	global $macme_table_statistics_data;
+	global $macme_table_statistics_location;
+	global $macme_table_content_assets;
+	global $macme_is_iphone;
+	global $macme_is_ipad;
+	global $macme_is_android;
+	global $macme_is_mobile;
+
 
 $q = "SELECT * FROM $macme_table_content_assets WHERE type=6 OR type = 7";
 $results = $wpdb->get_results($q);
