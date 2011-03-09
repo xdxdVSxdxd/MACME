@@ -23,7 +23,7 @@ $macme_table_content_assets = $wpdb->prefix . "macme_content_assets";
 <body>
 <?php
 if(isset($_GET["id"])){
-	echo( do_shortcode("[macme title='ciao' id='" . $_GET["id"] . "']") );
+	echo( do_shortcode("[macme title='' id='" . $_GET["id"] . "']") );
 }
 ?>
 </body>

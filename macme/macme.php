@@ -364,7 +364,7 @@ $imk = 0;
 global $wpdb;
 
 
-$q = "SELECT * FROM macme_content_assets WHERE type=6 OR type = 7";
+$q = "SELECT * FROM $macme_table_content_assets WHERE type=6 OR type = 7";
 $results = $wpdb->get_results($q);
 
 if($results){
