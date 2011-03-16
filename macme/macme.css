@@ -228,3 +228,26 @@ padding: 0px;
 width: 100%;
 font: 12px Arial, Helvetica, sans-serif;
 }
+
+
+div.macme_map_content_div{
+width: 200px;
+height: 80px;
+font: 10px Arial, Helvetica, sans-serif;
+}
+
+div.macme_map_content_div h1{
+font: bold 12px Arial, Helvetica, sans-serif;
+}
+
+div.macme_map_content_div a, div.macme_map_content_div a:visited{
+text-decoration:none;
+color: #666666;
+font: 10px Arial, Helvetica, sans-serif;
+}
+
+div.macme_map_content_div a, div.macme_map_content_div a:visited{
+text-decoration:none;
+color: #000000;
+font: 10px Arial, Helvetica, sans-serif;
+}

@@ -5,7 +5,7 @@ Plugin Name: MACME
 Plugin URI: http://www.fakepress.it/macme
 Description: MACME Framework
 Author: Salvatore Iaconesi
-Version: 0.02
+Version: 1.01
 Author URI: http://www.artisopensource.net
 */
 
@@ -89,6 +89,8 @@ add_shortcode('macme_xhtml', 'macme_xhtml_shortcode_handler');
 add_shortcode('macme_epub', 'macme_epub_shortcode_handler');
 add_shortcode('macme_world_map_visits', 'macme_shortcode_handler_world_map_visits');
 add_action('admin_menu', 'macme_admin_menu');
+add_action('save_post', 'macme_save_post', 10, 2);
+
 
 
 
@@ -291,8 +293,59 @@ function macme_all_codes_shortcode_handler($atts) {
 
 
 
+// POST SAVE ACTIONS
+// need to save post IDs in asset rows
+function macme_save_post($post_ID, $post) {
 
+	$pattern = get_shortcode_regex();
+    preg_match_all('/'.$pattern.'/s', $post->post_content, $matches);
+    
+	
+	if(is_array($matches) && count( $matches)>2  ){
+	
+		for($i=0; $i<count( $matches[2] ); $i++){
+		
+			if($matches[2][$i]=='macme'){
+			
+				
+				$parameters = $matches[3][$i];
+				$i1 = strpos($parameters,"id='");
+				if($i1){
+					$i1+=4;
+				}
+				$i2 = strpos($parameters,"'",$i1);
+				$s2 = substr($parameters,$i1,$i2-$i1);
+				
+				if($s2){
+				
+				
+				
+					global $wpdb;
 
+					global $macme_table_statistics_data;
+					global $macme_table_statistics_location;
+					global $macme_table_content_assets;
+					global $macme_is_iphone;
+					global $macme_is_ipad;
+					global $macme_is_android;
+					global $macme_is_mobile;
+				
+				
+					$q = "UPDATE $macme_table_content_assets SET id_post='" . $post->ID . "' WHERE id='" . $s2 . "'";
+					$wpdb->query( $q );
+				
+				
+				}
+			
+			}//if macme
+		
+		}//for i
+	
+	}//if isarray
+	
+	
+
+}
 
 
 
@@ -379,6 +432,10 @@ if($results){
 	foreach($results as $re){
 	
 	
+	 $fetched_post = get_post( $re->id_post );
+	 $info_content = "<div class='macme_map_content_div'><h1 class='macme_map_info_title'>" . $fetched_post->post_title . "</h1><p class='macme_map_info_paragraph'><a class='macme_map_info_link' href='" . get_permalink($re->id_post) . "' title='" . __("Open Content","macme") . "'>open</a></p></div>";
+	
+	
 		if($re->type==6){
 	
 	
@@ -390,6 +447,14 @@ if($results){
 			$s = $s . "});\n\n";
 			$s = $s . "markers.push( mk$imk );\n";
 
+
+			$s = $s . "var contentString = '" . str_replace("'","\'",$info_content) . "';\n";
+			$s = $s . "var info$imk = new google.maps.InfoWindow({ \n";
+    		$s = $s . "	content: contentString \n";
+			$s = $s . "});\n";
+			$s = $s . "google.maps.event.addListener(mk$imk, 'click', function() { \n";
+  			$s = $s . "	info$imk.open(map,mk$imk);\n";
+			$s = $s . "});\n";
 
 
 
@@ -407,11 +472,21 @@ if($results){
         	$s = $s ."			title: '" . str_replace("'", " ", $re->title ) . "'";//, icon: 'METTERE ICONA'";
 			$s = $s ."		});\n";
 			$s = $s . "		markers.push( mk$imk );\n";
-      		$s = $s ."	}\n"; 
+      		
+			
+			$s = $s . "var contentString = '" . str_replace("'","\'",$info_content) . "';\n";
+			$s = $s . "var info$imk = new google.maps.InfoWindow({ \n";
+    		$s = $s . "	content: contentString \n";
+			$s = $s . "});\n";
+			$s = $s . "google.maps.event.addListener(mk$imk, 'click', function() { \n";
+  			$s = $s . "	info$imk.open(map,mk$imk);\n";
+			$s = $s . "});\n";
+		
+			
+			$s = $s ."	}\n"; 
     		$s = $s ."});\n";
 
-		
-		
+			
 		}
 	
 		$imk++;
