@@ -90,8 +90,45 @@ add_shortcode('macme_epub', 'macme_epub_shortcode_handler');
 add_shortcode('macme_world_map_visits', 'macme_shortcode_handler_world_map_visits');
 add_action('admin_menu', 'macme_admin_menu');
 add_action('save_post', 'macme_save_post', 10, 2);
+add_action('wp_head', 'macme_head_do');
 
 
+
+
+// executed when header is built
+// scans for user device
+function macme_head_do(){
+global $macme_is_iphone;
+global $macme_is_ipad;
+global $macme_is_android;
+global $macme_is_mobile;
+
+
+$macme_is_iphone = false;
+$macme_is_ipad = false;
+$macme_is_android = false;
+$macme_is_mobile = false;
+
+
+$macme_is_iphone = strpos( strtoupper( $_SERVER['HTTP_USER_AGENT'] ),"IPHONE");
+$macme_is_android = strpos( strtoupper( $_SERVER['HTTP_USER_AGENT'] ),"ANDROID");
+$macme_is_ipad = strpos( strtoupper( $_SERVER['HTTP_USER_AGENT'] ),"IPAD");
+$macme_is_mobile = strpos( strtoupper( $_SERVER['HTTP_USER_AGENT'] ),"MOBILE");
+
+
+
+	if(  $macme_is_iphone || $macme_is_android ){
+		?>
+        <meta name="viewport" content="width=device-width" />
+        <?php
+	} else {
+		?>
+        <!-- mobile not detected -->
+        <?php
+	}
+
+
+}
 
 
 
@@ -277,7 +314,61 @@ function macme_all_codes_shortcode_handler($atts) {
 		foreach($posts as $p){
 			$plink = get_permalink( $p->ID );
 			$res = $res . "<div class='macme-qrcode-box'><img class='macme-qrcode-img' src='" . get_macme_qrcode_for_url( $plink ) . "' /><div class='macme-qrcode-title'>" . $p->post_title . "</div><div class='macme-qrcode-link'><a href='$plink' title='" . str_replace("'"," ",$p->post_title) . "'>$plink</a></div></div>";
-		}
+			
+			
+			$pattern = get_shortcode_regex();
+    		preg_match_all('/'.$pattern.'/s', $p->post_content, $matches);
+    
+	
+			if(is_array($matches) && count( $matches)>2  ){
+	
+				
+				for($i=0; $i<count( $matches[2] ); $i++){
+		
+					if($matches[2][$i]=='macme'){
+		
+		
+						$parameters = $matches[3][$i];
+						$i1 = strpos($parameters,"id='");
+						if($i1){
+							$i1+=4;
+						}
+						$i2 = strpos($parameters,"'",$i1);
+						$s2 = substr($parameters,$i1,$i2-$i1);
+						
+						
+						
+						$i3 = strpos($parameters,"title='");
+						if($i3){
+							$i3+=7;
+						}
+						$i4 = strpos($parameters,"'",$i3);
+						$s3 = substr($parameters,$i3,$i4-$i3);
+						
+						
+						
+				
+						if($s2){
+				
+				
+		
+						
+						
+							$link_cont = WP_PLUGIN_URL . '/macme/show.php?id=' . $s2;
+							
+							$res = $res . "<div class='macme-qrcode-box'><img class='macme-qrcode-img' src='" . get_macme_qrcode_for_url( $link_cont ) . "' /><div class='macme-qrcode-title'>" . $s3 . "</div><div class='macme-qrcode-link'><a href='$link_cont ' title='" . str_replace("'"," ",$s3) . "'>$link_cont </a></div></div>";
+		
+		
+						}//if s2
+		
+					}//if matches 2
+					
+				}//for i
+				
+				
+			}//if isarray
+			
+		}//foreach
 		
 	
 	return $res;
@@ -609,7 +700,30 @@ function macme_shortcode_handler($atts) {
 			
 		} else{
 		
-			$representation = $a->display;
+				
+				if($macme_is_iphone || $macme_is_android){
+				
+					$embed = preg_replace('/(width)=("[^"]*")/i', 'width="310"', $a->display );
+					$embed = preg_replace('/(height)=("[^"]*")/i', 'height="200"', $embed);
+					$representation = $embed;
+				
+				
+				} else if($macme_is_ipad){
+					$embed = preg_replace('/(width)=("[^"]*")/i', 'width="800"', $a->display );
+					$embed = preg_replace('/(height)=("[^"]*")/i', 'height="450"', $embed);
+					$representation = $embed;
+				
+				} else {
+				
+					$representation = $a->display;
+				}
+				
+				
+				
+				
+				//$r2 = resizeEmbed( $a->display , '100%', '100%');
+				//$representation  = $r2["embed"];
+				
 		}
 		
 		
@@ -1564,6 +1678,43 @@ function get_macme_qrcode_for_url( $l , $w=150, $h=150){
 	return $res;
 }
 
+
+
+
+// UTILITY FUNCTION: maintain only allowed tags in a HTML string
+function real_strip_tags($i_html, $i_allowedtags = array(), $i_trimtext = FALSE) {
+	if (!is_array($i_allowedtags)) $i_allowedtags = !empty($i_allowedtags) ? array($i_allowedtags) : array();
+	$tags = implode('|', $i_allowedtags);
+	if (empty($tags)) $tags = '[a-z]+';
+	preg_match_all('@</?\s*(' . $tags . ')(\s+[a-z_]+=(\'[^\']+\'|"[^"]+"))*\s*/?>@i', $i_html, $matches);
+	$full_tags = $matches[0];
+	$tag_names = $matches[1];
+	foreach ($full_tags as $i => $full_tag) {
+		if (!in_array($tag_names[$i], $i_allowedtags)) if ($i_trimtext) unset($full_tags[$i]); else $i_html = str_replace($full_tag, '', $i_html);
+	}
+	return $i_trimtext ? implode('', $full_tags) : $i_html;
+}
+
+
+// UTILITY FUNCTION: resize embed
+function resizeEmbed($video,$new_width='100%',$new_height='100%') {
+	echo("v0" . $video);
+	$video = real_strip_tags($video,array('iframe','embed','param','object'),true);
+	
+	echo("v1" . $video);
+	
+	preg_match("/width=\"([^\"]*)\"/i",$video,$w); $w = (integer)$w[1];
+	preg_match("/height=\"([^\"]*)\"/i",$video,$h); $h = (integer)$h[1];
+        if (!$new_width) $new_width = $w;
+	$w2 = $new_width;
+	//$ratio = (float)($w2/$w);
+	$h2 = $new_height;//(integer)($h * $ratio);
+	$video = str_replace("width=\"$w\"","width=\"$w2\"",$video);
+	echo("v2" . $video);
+	$video = str_replace("height=\"$h\"","height=\"$h2\"",$video);
+	echo("v3" . $video);
+	return array("embed"=>$video,"w"=>$w2,"h"=>$h2,"w0"=>$w,"h0"=>$h);
+}
 
 
 
