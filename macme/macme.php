@@ -5,7 +5,7 @@ Plugin Name: MACME
 Plugin URI: http://www.fakepress.it/macme
 Description: MACME Framework
 Author: Salvatore Iaconesi
-Version: 1.01
+Version: 1.02
 Author URI: http://www.artisopensource.net
 */
 
@@ -991,6 +991,16 @@ function register_macme_settings() {
 	register_setting( 'macme-settings-group', 'macme_book_latest_PDF_URL' );
 	register_setting( 'macme-settings-group', 'macme_book_latest_XHTML_URL' );
 	register_setting( 'macme-settings-group', 'macme_book_latest_EPUB_URL' );
+	register_setting( 'macme-settings-group', 'macme_book_title' );
+	register_setting( 'macme-settings-group', 'macme_book_identifier' );
+	register_setting( 'macme-settings-group', 'macme_book_language' );
+	register_setting( 'macme-settings-group', 'macme_book_description' );
+	register_setting( 'macme-settings-group', 'macme_book_author' );
+	register_setting( 'macme-settings-group', 'macme_book_publisher' );
+	register_setting( 'macme-settings-group', 'macme_book_rights' );
+	register_setting( 'macme-settings-group', 'macme_book_source_url' );
+	register_setting( 'macme-settings-group', 'macme_book_css_data' );
+	register_setting( 'macme-settings-group', 'macme_book_cover_image_url' );
 }
 
 
@@ -1263,13 +1273,63 @@ function macme_options() {
 <td><input type="text" name="macme_google_maps_styler" value="<?php echo ( str_replace('"', "'", get_option('macme_google_maps_styler') ) ); ?>" /></td>
 </tr>
 
+<tr valign="top">
+<th scope="row">Book Title</th>
+<td><input type="text" name="macme_book_title" value="<?php echo ( str_replace('"', "'", get_option('macme_book_title') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">Book Identifier (ISBN or unique URL)</th>
+<td><input type="text" name="macme_book_identifier" value="<?php echo ( str_replace('"', "'", get_option('macme_book_identifier') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">Book Language (2 char ISO code)</th>
+<td><input type="text" name="macme_book_language" value="<?php echo ( str_replace('"', "'", get_option('macme_book_language') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">Book description</th>
+<td><input type="text" name="macme_book_description" value="<?php echo ( str_replace('"', "'", get_option('macme_book_description') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">Book Author(s)</th>
+<td><input type="text" name="macme_book_author" value="<?php echo ( str_replace('"', "'", get_option('macme_book_author') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">Book Publisher</th>
+<td><input type="text" name="macme_book_publisher" value="<?php echo ( str_replace('"', "'", get_option('macme_book_publisher') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">Book Rights (a string describing licensing)</th>
+<td><input type="text" name="macme_book_rights" value="<?php echo ( str_replace('"', "'", get_option('macme_book_rights') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">Book Source URL (URL for the book)</th>
+<td><input type="text" name="macme_book_source_url" value="<?php echo ( str_replace('"', "'", get_option('macme_book_source_url') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">CSS used to style the book (see example at bottom)</th>
+<td><input type="text" name="macme_book_css_data" value="<?php echo ( str_replace('"', "'", get_option('macme_book_css_data') ) ); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">Cover Image URL (URL for a 800x600 pixels image used for teh book cover)</th>
+<td><input type="text" name="macme_book_cover_image_url" value="<?php echo ( str_replace('"', "'", get_option('macme_book_cover_image_url') ) ); ?>" /></td>
+</tr>
+
 
 
  
 </table>
 
 <input type="hidden" name="action" value="update" />
-<input type="hidden" name="page_options" value="macme_google_maps_api,macme_google_maps_styler" />
+<input type="hidden" name="page_options" value="macme_google_maps_api,macme_google_maps_style, macme_book_title, macme_book_identifier, macme_book_language, macme_book_description, macme_book_author, macme_book_publisher, macme_book_rights, macme_book_source_url, macme_book_css_data, macme_book_cover_image_url" />
 
 <p class="submit">
 <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
@@ -1294,6 +1354,20 @@ Google maps can now be styled. Try for example this value:<br />
 </i>
 </p>
 
+
+
+
+<p>
+<strong>CSS Used to style the book</strong>
+</p>
+
+<p>
+You can start from this example:<br />
+<br />
+<i>
+body {\n  margin-left: .5em;\n  margin-right: .5em;\n  text-align: justify;\n}\n\np {\n  font-family: serif;\n  font-size: 10pt;\n  text-align: justify;\n  text-indent: 1em;\n  margin-top: 0px;\n  margin-bottom: 8px;\n}\n\nh1{font: bold 24pt serif; color: #000000;}\n\nh2{font: 20pt serif; color: #000000;}\n\nh1 {\n    margin-bottom: 64px;\n}\n\nh2 {\n    margin-bottom: 16px;\n}\n\n.macme-qrcode-block{margin: 16px; }\n\n
+</i>
+</p>
 
 
 
@@ -1531,11 +1605,14 @@ function macme_get_html_string_for_book(){
 	$s = "";
 
 
-
-	$s = "<html>\n";
-	$s = $s . "<head>\n";
-	$s = $s . "</head>\n";
-	$s = $s . "<body>\n";
+			$s = $s . "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+			. "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n"
+			. "    \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n"
+			. "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+			. "<head>"
+			. "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n"
+			. "</head>\n";
+			$s = $s . "<body>\n";
 
 	$elements = get_option("macme_book_elements");
 	
@@ -1595,6 +1672,7 @@ function macme_get_html_string_for_book(){
 									
 									
 									do{
+									
 									
 										unset($matches);
 									
@@ -1659,6 +1737,199 @@ function macme_get_html_string_for_book(){
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//UTILITY FUNCTION: generate EPUB elements
+function macme_get_epub_elements(&$book,$cs){
+
+	
+	$elements = get_option("macme_book_elements");
+	
+	if(!$elements){
+		$elements = "";
+	}
+	
+	if($elements==""){
+	
+		?>
+        
+        ERROR! could not generate book, as book is empty!
+        
+        <?php
+	
+	
+	} else {
+	
+	
+	
+	
+					$elparts = explode("@",$elements);
+					
+					$idchap = 0;
+					$seqch = 0;
+					$chtit ="";
+					
+					$qrcodeseq = 0;
+					
+					if($elparts){
+					
+						$c = "";
+					
+						foreach($elparts as $el){
+						
+						
+							$ini = substr($el,0,1);
+							$rest = substr($el,1);
+							
+							if($ini=="_"){
+							
+								// è un contenuto
+								
+								$pas = explode("|",$rest);
+								
+								
+							
+								$c = $c . "<h2>" . $pas[1] . "</h2>";
+							
+								$post = get_post( $pas[0] );
+								
+								if($post){
+								
+								
+								
+									$cont = $post->post_content;
+									
+								
+									$pattern = get_shortcode_regex();
+									
+									
+									$matches;
+									
+									
+									do{
+									
+										unset($matches);
+									
+    									preg_match('/'.$pattern.'/s', $cont, $matches);
+    							
+								
+									
+									
+										
+										if(isset($matches) && count($matches)>2 && $matches[2]=="macme"){
+											
+											
+											$atts = shortcode_parse_atts( $matches[3] );
+
+											//print_r($atts);
+											
+											if($atts["id"]<>""){
+											
+												$urlos = get_macme_qrcode_for_url(  WP_PLUGIN_URL . '/macme/show.php?id=' . $atts["id"] );
+												
+												
+												/*						
+												$img = file_get_contents($urlos);
+												
+												$qrcodeseq++;
+												
+												$fnamePATH =  'generatedEPUB/QRCODE-' . $qrcodeseq . ".png";
+												$fnameURL =  'QRCODE-' . $qrcodeseq . ".png";
+											
+											
+												$fileHTML = fopen ($fnamePATH , "w");
+												fwrite($fileHTML, $img);
+												fclose ($fileHTML); 
+												*/
+												
+												
+												$rep = "<div class='macme-qrcode-block'><div class='macme-qrcode'><img src='" . $urlos . "' border='0' /></div> <div class='macme-qrcode-label'>" . $atts["title"] . "</div> </div> ";
+												
+												$cont = str_replace($matches[0],$rep,$cont);
+											
+											} else {
+												$cont = str_replace($matches[0],'',$cont);
+											}	
+										
+										
+										}
+										
+									}while( isset($matches) &&  count($matches)>0 );
+									
+									
+									$c = $c . "<p class='body'>" . nl2br($cont) . "</p>";
+									
+								
+								}
+							
+							
+							} else if ($ini=="#"){
+							
+								if($c<>""){
+								
+									$c = $c . "</html></body>";
+								
+									$seqch++;
+									$book->addChapter($chtit, "Chapter" . str_pad($seqch ,4,"0", STR_PAD_LEFT) . ".html", $c, true, EPub::EXTERNAL_REF_ADD, "");
+									
+									
+									$c = "";
+									$chtit = "";
+								
+								
+								}
+								
+								$c = $cs . "<h1>$rest</h1>";
+								$chtit = $rest;
+								
+							
+							}
+						
+						
+						}//foreach elparts
+					
+					
+						//ADD LAST CHAPTER
+						$c = $c . "</html></body>";
+								
+						$seqch++;
+						$book->addChapter($chtit, "Chapter" . str_pad($seqch ,4,"0", STR_PAD_LEFT) . ".html", $c);
+						
+					
+					
+					}//if elparts
+	
+
+	
+	}
+	
+	
+
+
+
+}
+
 
 
 
