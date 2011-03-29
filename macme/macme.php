@@ -5,7 +5,7 @@ Plugin Name: MACME
 Plugin URI: http://www.fakepress.it/macme
 Description: MACME Framework
 Author: Salvatore Iaconesi
-Version: 1.02
+Version: 1.05
 Author URI: http://www.artisopensource.net
 */
 
