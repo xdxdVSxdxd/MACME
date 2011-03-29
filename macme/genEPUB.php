@@ -5,6 +5,7 @@
 
 
 
+	//echo(".... started epub generation<br />");
 
 	global $wpdb;
 
@@ -25,6 +26,8 @@
 	
 	if($elements==""){
 	
+		//echo(".... book index has not been created.<br />");
+	
 		?>
         
         ERROR! could not generate book, as book is empty!
@@ -35,9 +38,11 @@
 	} else {
 	
 	
+	
 		$unico = "macme_" . md5( uniqid() );
 	
 	
+		//echo(".... book index has been created, using uid=" . $unico . "<br />");
 	
 		$fileDir = ABSPATH . 'wp-content/plugins/macme/generatedEPUB/';
 
@@ -45,7 +50,7 @@
 
 		$book = new EPub();
 
-	
+		//echo(".... initalized EPUB class<br />");
 	
 	
 		$book->setTitle("A Book made with MACME");
@@ -112,6 +117,8 @@
 
 		$book->addCSSFile("styles.css", "css1", $cssData);
 
+
+		//echo(".... added styles<br />");
 	
 		$book->setCoverImage("Cover.jpg", file_get_contents(ABSPATH . 'wp-content/plugins/macme/epub–cover.jpg'), "image/jpeg");
 		//$book->setCoverImage(ABSPATH . 'wp-content/plugins/macme/epub–cover.jpg');
@@ -119,6 +126,7 @@
 			$book->setCoverImage("Cover.jpg", file_get_contents(get_option('macme_book_cover_image_url')), "image/jpeg");
 		}
 		
+		//echo(".... added cover image<br />");
 		
 		$booktitle = "A Book made with MACME";
 		if(get_option('macme_book_title') && get_option('macme_book_title')<>""){
@@ -149,11 +157,18 @@
 			. "</body>\n</html>\n";
 		$book->addChapter("Notices", "Cover.html", $cover);
 		
+		//echo("<br /> finished initializing...");
+		
 		
 		macme_get_epub_elements($book,$content_start);	
 	
+	
+		//echo("<br /> got book parts...");
+		
+		
 		$book->finalize();
 		
+		//echo("<br /> book finalized...");
 	
 		$s = $book->getBook();
 	
@@ -161,15 +176,20 @@
 		$fnamePATH =  ABSPATH . 'wp-content/plugins/macme/generatedEPUB/' . $unico . ".epub";
 	
 	
+		
 		$fileHTML = fopen ($fnamePATH , "w");
 		fwrite($fileHTML, $s);
 		fclose ($fileHTML); 
+		
+		//echo("<br /> book saved...");
+		
 		
 		update_option("macme_book_latest_XHTML_URL",$fnameURL);
 		
 		echo("<a href='" . $fnameURL . "' target='_blank'>OPEN GENERATED EPUB</a><br />");
 		
 	
+		//echo("<br /> generation finished...");
 	
 	}
 

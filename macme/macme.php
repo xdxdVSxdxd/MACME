@@ -1671,6 +1671,8 @@ function macme_get_html_string_for_book(){
 									$matches;
 									
 									
+									$finished = false;
+									
 									do{
 									
 									
@@ -1680,10 +1682,11 @@ function macme_get_html_string_for_book(){
     							
 								
 									
-									
+										$finished = true;
 										
 										if(isset($matches) && count($matches)>2 && $matches[2]=="macme"){
 											
+											$finished = false;
 											
 											$atts = shortcode_parse_atts( $matches[3] );
 
@@ -1702,8 +1705,10 @@ function macme_get_html_string_for_book(){
 										
 										}
 										
-									}while( isset($matches) &&  count($matches)>0 );
+									}while( !finished );
 									
+									
+									$cont = do_shortcode($cont);
 									
 									$s = $s . "<div class='body'>" . nl2br($cont) . "</div>";
 								
@@ -1799,6 +1804,9 @@ function macme_get_epub_elements(&$book,$cs){
 						foreach($elparts as $el){
 						
 						
+							//echo("...got part<br />");
+						
+						
 							$ini = substr($el,0,1);
 							$rest = substr($el,1);
 							
@@ -1817,6 +1825,7 @@ function macme_get_epub_elements(&$book,$cs){
 								if($post){
 								
 								
+									//echo("...... got post<br />");
 								
 									$cont = $post->post_content;
 									
@@ -1826,19 +1835,23 @@ function macme_get_epub_elements(&$book,$cs){
 									
 									$matches;
 									
+									$finished = false;
 									
 									do{
 									
+										//echo("...... replacing macme content<br />");
+										
 										unset($matches);
 									
     									preg_match('/'.$pattern.'/s', $cont, $matches);
     							
 								
-									
-									
+										//print_r($matches);
+										$finished = true;
 										
 										if(isset($matches) && count($matches)>2 && $matches[2]=="macme"){
 											
+											$finished = false;
 											
 											$atts = shortcode_parse_atts( $matches[3] );
 
@@ -1875,8 +1888,9 @@ function macme_get_epub_elements(&$book,$cs){
 										
 										}
 										
-									}while( isset($matches) &&  count($matches)>0 );
+									}while( !$finished );
 									
+									$cont = do_shortcode( $cont );
 									
 									$c = $c . "<p class='body'>" . nl2br($cont) . "</p>";
 									

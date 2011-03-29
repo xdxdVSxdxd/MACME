@@ -180,6 +180,6 @@ function generateXHTML(){
 
 
 function generateEPUB(){
-	jQuery("div#macme-generate-ajax-destination").html("please wait... generating XHTML");
+	jQuery("div#macme-generate-ajax-destination").html("please wait... generating EPUB");
 	jQuery("div#macme-generate-ajax-destination").load("../wp-content/plugins/macme/genEPUB.php");
 }
