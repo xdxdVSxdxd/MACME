@@ -5,7 +5,7 @@ Plugin Name: MACME
 Plugin URI: http://www.fakepress.it/macme
 Description: MACME Framework
 Author: Salvatore Iaconesi
-Version: 1.05
+Version: 1.06
 Author URI: http://www.artisopensource.net
 */
 
@@ -1602,6 +1602,17 @@ function macme_shortcode_handler_world_map_visits( $atts ){
 //UTILITY FUNCTION: get XHTML string for the configured book
 function macme_get_html_string_for_book(){
 
+		$cssData = "body {\n  margin-left: .5em;\n  margin-right: .5em;\n  text-align: justify;\n}\n\np {\n  font-family: serif;\n  font-size: 10pt;\n  text-align: justify;\n  text-indent: 1em;\n  margin-top: 0px;\n  margin-bottom: 8px;\n}\n\nh1{font: bold 24pt serif; color: #000000;}\n\nh2{font: 20pt serif; color: #000000;}\n\nh1 {\n    page-break-before: always; \nmargin-bottom: 64px;\n}\n\nh2 {\n    page-break-before: always; \nmargin-bottom: 16px;\n}\n\n.macme-qrcode-block{margin: 16px; }";
+		if(get_option('macme_book_css_data') && get_option('macme_book_css_data')<>""){
+			$cssData = (get_option('macme_book_css_data'));
+		}
+
+
+		$coverImageUrl = WP_PLUGIN_URL . "/macme/epub-cover.jpg";
+		if(get_option('macme_book_cover_image_url') && get_option('macme_book_cover_image_url')<>""){
+			$coverImageUrl = get_option('macme_book_cover_image_url');
+		}
+
 	$s = "";
 
 
@@ -1611,9 +1622,29 @@ function macme_get_html_string_for_book(){
 			. "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
 			. "<head>"
 			. "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n"
+			. "<style>"
+			. $cssData
+			. "</style>"
 			. "</head>\n";
 			$s = $s . "<body>\n";
+			$s = $s . "<img src='" . $coverImageUrl . "' border='0' />";
+			
+			
+			$booktitle = "A Book made with MACME";
+			if(get_option('macme_book_title') && get_option('macme_book_title')<>""){
+				$booktitle  = get_option('macme_book_title');
+			}
+			
+			$bookauthor = "A Happy MACME User";
+			if(get_option('macme_book_author') && get_option('macme_book_author')<>""){
+				$bookauthor  = get_option('macme_book_author');
+			}
 
+
+			$s = $s . "<h1>$booktitle</h1>\n$bookauthor\n";
+						
+			
+			
 	$elements = get_option("macme_book_elements");
 	
 	if(!$elements){

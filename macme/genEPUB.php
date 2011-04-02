@@ -108,7 +108,7 @@
 		}
 		
 		
-		$cssData = "body {\n  margin-left: .5em;\n  margin-right: .5em;\n  text-align: justify;\n}\n\np {\n  font-family: serif;\n  font-size: 10pt;\n  text-align: justify;\n  text-indent: 1em;\n  margin-top: 0px;\n  margin-bottom: 8px;\n}\n\nh1{font: bold 24pt serif; color: #000000;}\n\nh2{font: 20pt serif; color: #000000;}\n\nh1 {\n    margin-bottom: 64px;\n}\n\nh2 {\n    margin-bottom: 16px;\n}\n\n.macme-qrcode-block{margin: 16px; }";
+		$cssData = "body {\n  margin-left: .5em;\n  margin-right: .5em;\n  text-align: justify;\n}\n\np {\n  font-family: serif;\n  font-size: 10pt;\n  text-align: justify;\n  text-indent: 1em;\n  margin-top: 0px;\n  margin-bottom: 8px;\n}\n\nh1{font: bold 24pt serif; color: #000000;}\n\nh2{font: 20pt serif; color: #000000;}\n\nh1 {\n    page-break-before: always; \nmargin-bottom: 64px;\n}\n\nh2 {\n    page-break-before: always; \nmargin-bottom: 16px;\n}\n\n.macme-qrcode-block{margin: 16px; }";
 		if(get_option('macme_book_css_data') && get_option('macme_book_css_data')<>""){
 			$cssData = (get_option('macme_book_css_data'));
 		}
@@ -120,7 +120,7 @@
 
 		//echo(".... added styles<br />");
 	
-		$book->setCoverImage("Cover.jpg", file_get_contents(ABSPATH . 'wp-content/plugins/macme/epub–cover.jpg'), "image/jpeg");
+		$book->setCoverImage("Cover.jpg", file_get_contents(ABSPATH . 'wp-content/plugins/macme/epub-cover.jpg'), "image/jpeg");
 		//$book->setCoverImage(ABSPATH . 'wp-content/plugins/macme/epub–cover.jpg');
 		if(get_option('macme_book_cover_image_url') && get_option('macme_book_cover_image_url')<>""){
 			$book->setCoverImage("Cover.jpg", file_get_contents(get_option('macme_book_cover_image_url')), "image/jpeg");
