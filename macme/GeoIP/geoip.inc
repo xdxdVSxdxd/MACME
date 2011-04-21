@@ -373,6 +373,8 @@ function geoip_close($gi) {
   return fclose($gi->filehandle);
 }
 
+
+if(!function_exists("geoip_country_id_by_name")){
 function geoip_country_id_by_name($gi, $name) {
   $addr = gethostbyname($name);
   if (!$addr || $addr == $name) {
@@ -380,7 +382,10 @@ function geoip_country_id_by_name($gi, $name) {
   }
   return geoip_country_id_by_addr($gi, $addr);
 }
+}
 
+
+if(!function_exists("geoip_country_code_by_name")){
 function geoip_country_code_by_name($gi, $name) {
   $country_id = geoip_country_id_by_name($gi,$name);
   if ($country_id !== false) {
@@ -388,7 +393,10 @@ function geoip_country_code_by_name($gi, $name) {
   }
   return false;
 }
+}
 
+
+if(!function_exists("geoip_country_name_by_name")){
 function geoip_country_name_by_name($gi, $name) {
   $country_id = geoip_country_id_by_name($gi,$name);
   if ($country_id !== false) {
@@ -396,12 +404,17 @@ function geoip_country_name_by_name($gi, $name) {
   }
   return false;
 }
+}
 
+
+if(!function_exists("geoip_country_id_by_addr")){
 function geoip_country_id_by_addr($gi, $addr) {
   $ipnum = ip2long($addr);
   return _geoip_seek_country($gi, $ipnum) - GEOIP_COUNTRY_BEGIN;
 }
+}
 
+if(!function_exists("geoip_country_code_by_addr")){
 function geoip_country_code_by_addr($gi, $addr) {
   if ($gi->databaseType == GEOIP_CITY_EDITION_REV1) {
     $record = geoip_record_by_addr($gi,$addr);
@@ -416,7 +429,10 @@ function geoip_country_code_by_addr($gi, $addr) {
   }
   return false;
 }
+}
 
+
+if(!function_exists("geoip_country_name_by_addr")){
 function geoip_country_name_by_addr($gi, $addr) {
   if ($gi->databaseType == GEOIP_CITY_EDITION_REV1) {
     $record = geoip_record_by_addr($gi,$addr);
@@ -429,7 +445,10 @@ function geoip_country_name_by_addr($gi, $addr) {
   }
   return false;
 }
+}
 
+
+if(!function_exists("_geoip_seek_country")){
 function _geoip_seek_country($gi, $ipnum) {
   $offset = 0;
   for ($depth = 31; $depth >= 0; --$depth) {
@@ -473,6 +492,7 @@ function _geoip_seek_country($gi, $ipnum) {
   }
   trigger_error("error traversing database - perhaps it is corrupt?", E_USER_ERROR);
   return false;
+}
 }
 
 function _get_org($gi,$ipnum){

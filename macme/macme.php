@@ -5,7 +5,7 @@ Plugin Name: MACME
 Plugin URI: http://www.fakepress.it/macme
 Description: MACME Framework
 Author: Salvatore Iaconesi
-Version: 1.06
+Version: 1.1
 Author URI: http://www.artisopensource.net
 */
 
@@ -1684,6 +1684,7 @@ function macme_get_html_string_for_book(){
 								$pas = explode("|",$rest);
 								
 								
+								
 							
 								$s = $s . "<h2>" . $pas[1] . "</h2>";
 							
@@ -1706,14 +1707,14 @@ function macme_get_html_string_for_book(){
 									
 									do{
 									
+										//unset($matches);
 									
-										unset($matches);
-									
-    									preg_match('/'.$pattern.'/s', $cont, $matches);
+										preg_match('/'.$pattern.'/s', $cont, $matches);
     							
 								
 									
 										$finished = true;
+										
 										
 										if(isset($matches) && count($matches)>2 && $matches[2]=="macme"){
 											
@@ -1721,22 +1722,21 @@ function macme_get_html_string_for_book(){
 											
 											$atts = shortcode_parse_atts( $matches[3] );
 
-											//print_r($atts);
-											
 											if($atts["id"]<>""){
 												
 												$rep = "<div class='macme-qrcode-block'><div class='macme-qrcode'><img src='" . get_macme_qrcode_for_url(  WP_PLUGIN_URL . '/macme/show.php?id=' . $atts["id"] ) . "' border='0' /></div> <div class='macme-qrcode-label'>" . $atts["title"] . "</div> </div> ";
 												
 												$cont = str_replace($matches[0],$rep,$cont);
+												
 											
 											} else {
 												$cont = str_replace($matches[0],'',$cont);
+											
 											}	
-										
 										
 										}
 										
-									}while( !finished );
+								}while( !$finished );
 									
 									
 									$cont = do_shortcode($cont);
