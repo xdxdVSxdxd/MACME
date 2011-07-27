@@ -20,6 +20,77 @@
 	
 	if($elements==""){
 	
+	
+		echo("generating book from categories<br/>");
+	
+		$categories = get_categories();
+		foreach ($categories as $category) {
+  			
+			
+			echo("got category[" . $category->cat_name . "]<br/>");
+			
+			$elements = $elements . "@" . "#" . $category->cat_name . " - " . str_replace("#", " ", $category->category_description);
+		
+			
+			
+			$childcats = get_categories(  array(
+				'child_of' => $category->cat_ID
+			) );
+			
+			
+			$argposts;
+			
+			
+			if($childcats && count($childcats)>0){
+			
+				$cc = array();
+				
+				foreach($childcats as $ca){
+				
+					$cc[] = $ca->cat_ID;
+				
+				}
+			
+				 $argposts= array(
+					'category' => $category->cat_ID,
+					'post_status' => 'publish',
+					'posts_per_page ' => -1,
+					'showposts' => -1,
+					'nopaging' => true,
+					'category__not_in' => $cc
+				);
+			
+			} else {
+			
+				 $argposts= array(
+					'category' => $category->cat_ID,
+					'post_status' => 'publish',
+					'posts_per_page ' => -1,
+					'showposts' => -1,
+					'nopaging' => true
+				);
+			
+			
+			}
+			
+			$posts = get_posts($argposts);
+			
+			foreach($posts as $po){
+			
+				echo("got post[" . $po->post_title . "]<br/>");
+			
+				$elements= $elements . "@" .  "_" . $po->ID . "|" . $po->post_title;
+			
+			}
+			
+	  	}
+		
+		
+		update_option( "macme_book_elements", $elements );
+	}
+	
+	if($elements==""){
+	
 		?>
         
         ERROR! could not generate book, as book is empty!

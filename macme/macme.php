@@ -1043,12 +1043,12 @@ function macme_book_generate(){
     
     		<?php
 			
-				if($elements==""){
+				//if($elements==""){
 	
 	
-					echo( __("Please use the MACME_BOOK function to configure your book before attempting to generating it." , "macme") );
+				//	echo( __("Please use the MACME_BOOK function to configure your book before attempting to generating it." , "macme") );
 					
-				} else {
+				//} else {
 				
 				
 					?>
@@ -1068,7 +1068,7 @@ function macme_book_generate(){
                     <?php
 				
 				
-				}// else di if elements empty
+				//}// else di if elements empty
 			
 			?>        
             
@@ -1222,8 +1222,21 @@ function macme_book_options(){
 		?>
         
         	<input type="hidden" id="macme_book_elements" name="macme_book_elements" value="<?php echo get_option('macme_book_elements'); ?>" />
-        	<input type="hidden" name="action" value="update" />
-			<input type="hidden" name="page_options" value="macme_book_elements" />
+        	<input type="hidden" name="macme_google_maps_api" value="<?php echo get_option('macme_google_maps_api'); ?>" />
+<input type="hidden" name="macme_google_maps_styler" value="<?php echo ( str_replace('"', "'", get_option('macme_google_maps_styler') ) ); ?>" />
+<input type="hidden" name="macme_book_title" value="<?php echo ( str_replace('"', "'", get_option('macme_book_title') ) ); ?>" />
+<input type="hidden" name="macme_book_identifier" value="<?php echo ( str_replace('"', "'", get_option('macme_book_identifier') ) ); ?>" />
+<input type="hidden" name="macme_book_language" value="<?php echo ( str_replace('"', "'", get_option('macme_book_language') ) ); ?>" />
+<input type="hidden" name="macme_book_description" value="<?php echo ( str_replace('"', "'", get_option('macme_book_description') ) ); ?>" />
+<input type="hidden" name="macme_book_author" value="<?php echo ( str_replace('"', "'", get_option('macme_book_author') ) ); ?>" />
+<input type="hidden" name="macme_book_publisher" value="<?php echo ( str_replace('"', "'", get_option('macme_book_publisher') ) ); ?>" />
+<input type="hidden" name="macme_book_rights" value="<?php echo ( str_replace('"', "'", get_option('macme_book_rights') ) ); ?>" />
+<input type="hidden" name="macme_book_source_url" value="<?php echo ( str_replace('"', "'", get_option('macme_book_source_url') ) ); ?>" />
+<input type="hidden" name="macme_book_css_data" value="<?php echo ( str_replace('"', "'", get_option('macme_book_css_data') ) ); ?>" />
+<input type="hidden" name="macme_book_cover_image_url" value="<?php echo ( str_replace('"', "'", get_option('macme_book_cover_image_url') ) ); ?>" />
+
+            <input type="hidden" name="action" value="update" />
+			<input type="hidden" name="page_options" value="macme_book_elements,macme_google_maps_api,macme_google_maps_style, macme_book_title, macme_book_identifier, macme_book_language, macme_book_description, macme_book_author, macme_book_publisher, macme_book_rights, macme_book_source_url, macme_book_css_data, macme_book_cover_image_url" />
 
         </form>
 
@@ -1254,6 +1267,7 @@ function macme_options() {
 
 <p><b>MACME Configuration</b></p>
 <form method="post" action="options.php">
+<input type="hidden" name="macme_book_elements" value="<?php echo get_option('macme_book_elements'); ?>" />
 <?php 
 	//wp_nonce_field('update-options');
 	 settings_fields( 'macme-settings-group' );  
@@ -1329,7 +1343,7 @@ function macme_options() {
 </table>
 
 <input type="hidden" name="action" value="update" />
-<input type="hidden" name="page_options" value="macme_google_maps_api,macme_google_maps_style, macme_book_title, macme_book_identifier, macme_book_language, macme_book_description, macme_book_author, macme_book_publisher, macme_book_rights, macme_book_source_url, macme_book_css_data, macme_book_cover_image_url" />
+<input type="hidden" name="page_options" value="macme_book_elements,macme_google_maps_api,macme_google_maps_style, macme_book_title, macme_book_identifier, macme_book_language, macme_book_description, macme_book_author, macme_book_publisher, macme_book_rights, macme_book_source_url, macme_book_css_data, macme_book_cover_image_url" />
 
 <p class="submit">
 <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
@@ -1651,10 +1665,43 @@ function macme_get_html_string_for_book(){
 		$elements = "";
 	}
 	
+	
+	//echo("this is elements[" . $elements . "]");
+	
+	if($elements==""){
+	
+	
+		echo("generating book from categories<br/>");
+	
+		$categories = get_categories();
+		foreach ($categories as $category) {
+  			
+			
+			echo("got category[" . $category->cat_name . "]<br/>");
+			
+			$elements = $elements . "@" . "#" . $category->cat_name;
+		
+			$argposts = array(
+				'cat' => $category->term_id
+			);
+			$posts = get_posts();
+			
+			foreach($posts as $po){
+			
+				echo("got post[" . $po->post_title . "]<br/>");
+			
+				$elements= $elements . "@" .  "_" . $po->ID . "|" . $po->post_title;
+			
+			}
+			
+	  	}
+	}
+	
 	if($elements==""){
 	
 		?>
         
+        [while generating XHTML]
         ERROR! could not generate book, as book is empty!
         
         <?php
@@ -1810,7 +1857,7 @@ function macme_get_epub_elements(&$book,$cs){
 	
 		?>
         
-        ERROR! could not generate book, as book is empty!
+        ERROR! could not generate book[epub], as book is empty!
         
         <?php
 	

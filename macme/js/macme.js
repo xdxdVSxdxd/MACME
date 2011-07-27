@@ -124,6 +124,13 @@ function saveStructure(){
 	
 	var s = "";
 	
+	if(jQuery("div#macme-to div.macme-chapter, div#macme-to div.macme-post-from").length==0){
+		
+		jQuery("input#macme_book_elements").val("");
+		jQuery("form#book-structure-form").submit();
+		
+	} else {
+	
 	jQuery("div#macme-to div.macme-chapter, div#macme-to div.macme-post-from").each(function(index){
 	
 		var id = jQuery(this).attr("id");
@@ -152,6 +159,8 @@ function saveStructure(){
 	
 	
 	});
+	
+	}
 	
 	
 }
